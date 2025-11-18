@@ -1,11 +1,14 @@
 fastapi
 uvicorn
 
-langchain
-langchain-core
-langchain-groq
+langchain==0.2.16
+langchain-core==0.2.39
+langchain-groq==0.1.9
 langchain-text-splitters
-langgraph
+langgraph==0.1.19
 
 pydantic
 python-dotenv
+
+# Observabilidad y Monitoreo
+langfuse

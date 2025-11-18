@@ -49,6 +49,7 @@ Este proyecto implementa un **flujo de trabajo multi-agente** utilizando LangGra
 - 📝 **Documentación automática** con Swagger/OpenAPI
 - 🔐 **Manejo seguro de variables de entorno**
 - 🚀 **Despliegue automático en Render**
+- 📊 **Observabilidad completa con LangFuse**
 
 ### Frontend (React)
 - ⚛️ **React 18** con Vite para desarrollo rápido
@@ -59,6 +60,13 @@ Este proyecto implementa un **flujo de trabajo multi-agente** utilizando LangGra
 - 🌙 **Soporte para modo oscuro**
 - 📋 **Funcionalidades avanzadas**: copiar, compartir, descargar resultados
 
+### Observabilidad y Monitoreo
+- 📈 **LangFuse** - Observabilidad completa de LLMs
+- 🔍 **Trazabilidad de agentes** - Seguimiento detallado de cada paso
+- 📊 **Métricas de rendimiento** - Tiempo de ejecución y tokens
+- 🐛 **Manejo de errores** - Logging y debugging avanzado
+- 📝 **Traces completos** - Visualización del flujo multi-agentes
+
 ## 🛠️ Tecnologías Utilizadas
 
 ### Backend
@@ -66,6 +74,7 @@ Este proyecto implementa un **flujo de trabajo multi-agente** utilizando LangGra
 - **LangGraph** - Orchestación de flujos de agentes de IA
 - **LangChain** - Integración con modelos de lenguaje
 - **GROQ** - Inferencia rápida de modelos LLM (LLaMA 3.1-8B-Instant)
+- **LangFuse** - Observabilidad y monitoreo de LLMs
 - **Python-dotenv** - Gestión de variables de entorno
 - **Uvicorn** - Servidor ASGI de alto rendimiento
 
@@ -113,10 +122,33 @@ pip install -r requirements.txt
 ```
 
 4. **Configura las variables de entorno**:
+
+**Configuración básica (requerida)**:
 ```bash
-# Crear archivo .env
+# Crear archivo .env con configuración mínima
 echo "GROQ_API_KEY=tu_clave_groq_aqui" > .env
 ```
+
+**Configuración completa con LangFuse (recomendada)**:
+```bash
+# Copia el archivo de ejemplo
+cp .env.example .env
+
+# Edita .env con tus credenciales:
+# GROQ_API_KEY=tu_clave_groq_aqui
+# LANGFUSE_PUBLIC_KEY=pk-lf-tu_public_key_aqui
+# LANGFUSE_SECRET_KEY=sk-lf-tu_secret_key_aqui  
+# LANGFUSE_HOST=https://cloud.langfuse.com
+```
+
+**Para configurar LangFuse**:
+1. Ve a [https://cloud.langfuse.com](https://cloud.langfuse.com)
+2. Crea una cuenta gratuita
+3. Crea un nuevo proyecto
+4. Copia las claves Public Key y Secret Key
+5. Añádelas a tu archivo `.env`
+
+> **Nota**: LangFuse es opcional. Si no lo configuras, el sistema funcionará normalmente sin observabilidad.
 
 5. **Ejecuta el servidor**:
 ```bash
@@ -212,6 +244,119 @@ Información general de la API.
 3. **Configura las variables de entorno**:
    - `VITE_API_URL`: URL de tu API en Render
 4. **Despliega automáticamente**
+
+## 📊 Observabilidad con LangFuse
+
+### ¿Qué es LangFuse?
+LangFuse es una plataforma de observabilidad diseñada específicamente para aplicaciones de IA y LLM. Proporciona trazabilidad completa, métricas detalladas y debugging avanzado.
+
+### Características Integradas
+
+#### 🔍 **Trazabilidad Completa**
+- **Traces por sesión**: Cada análisis multi-agentes se rastrea completamente
+- **Spans detallados**: Cada agente (Investigador, Escritor, Verificador) genera su propio span
+- **Input/Output logging**: Captura de entradas y salidas de cada paso
+
+#### 📈 **Métricas y Analytics**
+- **Tiempo de ejecución**: Duración de cada agente y del flujo completo
+- **Uso de tokens**: Consumo detallado por agente y total
+- **Tasa de éxito/error**: Monitoreo de la fiabilidad del sistema
+- **Costo por operación**: Tracking de costos de API
+
+#### 🐛 **Debugging Avanzado**
+- **Error tracking**: Captura automática de errores con contexto
+- **Log correlation**: Correlación entre logs de aplicación y traces
+- **Performance profiling**: Identificación de cuellos de botella
+
+### Visualización de Datos
+
+#### Dashboard Principal
+```
+📊 Sistema Multi-Agentes Dashboard
+┌─────────────────────────────────────┐
+│ 📈 Métricas Generales               │
+│ • Total de análisis: 1,245          │
+│ • Tiempo promedio: 18.3s            │
+│ • Tasa de éxito: 97.8%              │
+│ • Tokens consumidos: 2.1M           │
+└─────────────────────────────────────┘
+
+🔍 Traces Recientes
+┌─────────────────────────────────────┐
+│ [18:45] "IA en medicina" ✅ 16.2s   │
+│ [18:42] "blockchain" ✅ 22.1s       │
+│ [18:38] "energía solar" ❌ 8.3s     │
+│ [18:35] "machine learning" ✅ 19.7s │
+└─────────────────────────────────────┘
+```
+
+#### Trace Individual
+```
+🔗 Trace: "inteligencia artificial en medicina"
+├── 🔍 Investigador (5.2s)
+│   ├── Input: {"tema": "inteligencia artificial en medicina"}
+│   ├── Tokens: 1,247 (entrada) + 2,853 (salida)
+│   └── Output: "La IA en medicina ha revolucionado..."
+│
+├── ✍️ Escritor (7.8s)  
+│   ├── Input: {"informacion_length": 1,432}
+│   ├── Tokens: 2,853 (entrada) + 1,967 (salida)
+│   └── Output: "Introducción: La inteligencia artificial..."
+│
+└── 🔍 Verificador (4.7s)
+    ├── Input: {"resumen_length": 987}
+    ├── Tokens: 1,967 (entrada) + 2,234 (salida)  
+    └── Output: "La inteligencia artificial en medicina..."
+```
+
+### Configuración Avanzada
+
+#### Variables de Entorno
+```bash
+# LangFuse Configuration
+LANGFUSE_PUBLIC_KEY=pk-lf-xxx...    # Clave pública del proyecto
+LANGFUSE_SECRET_KEY=sk-lf-xxx...    # Clave secreta del proyecto
+LANGFUSE_HOST=https://cloud.langfuse.com  # Host (cloud o self-hosted)
+```
+
+#### Personalización de Traces
+El sistema permite personalizar la información capturada:
+
+```python
+# Ejemplo de configuración personalizada
+monitor.create_trace(
+    name="analisis_personalizado",
+    input_data={"tema": tema, "usuario": user_id},
+    metadata={
+        "session_type": "premium_analysis",
+        "version": "v1.1.0",
+        "source": "web_interface"
+    }
+)
+```
+
+### Beneficios para Desarrollo
+
+#### 🚀 **Optimización de Rendimiento**
+- Identificación de agentes lentos
+- Optimización de prompts
+- Reducción de costos de API
+
+#### 🔧 **Debugging Eficiente**
+- Reproducción exacta de errores
+- Análisis de fallos por agente
+- Correlación temporal de eventos
+
+#### 📊 **Insights de Negocio**
+- Patrones de uso más comunes
+- Temas más consultados
+- Satisfacción del usuario (indirecta)
+
+### Acceso al Dashboard
+
+Una vez configurado, accede a tus traces en:
+- **LangFuse Cloud**: [https://cloud.langfuse.com](https://cloud.langfuse.com)
+- **Self-hosted**: Tu instancia privada
 
 ## 💡 Casos de Uso
 

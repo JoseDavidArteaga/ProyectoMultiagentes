@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pipeline.flujo import flujo
+from monitor.langfuse_config import monitor
 import asyncio
 from typing import Dict, Any
 import uvicorn
@@ -13,14 +14,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configurar logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
 # Crear la aplicación FastAPI
 app = FastAPI(
-    title="Sistema Multi-Agentes",
-    description="API para procesar información usando un flujo de investigación, escritura y verificación",
-    version="1.0.0"
+    title="Sistema Multi-Agentes con LangFuse",
+    description="API para procesar información usando un flujo de investigación, escritura y verificación con observabilidad completa",
+    version="1.1.0"
 )
 
 # Configurar CORS
@@ -31,6 +35,27 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Startup event para inicializar LangFuse
+@app.on_event("startup")
+async def startup_event():
+    """Inicializar servicios al arrancar la aplicación"""
+    logger.info("🚀 Iniciando Sistema Multi-Agentes...")
+    
+    # Verificar configuración de LangFuse
+    if monitor.is_enabled():
+        logger.info("✅ LangFuse configurado correctamente")
+    else:
+        logger.warning("⚠️ LangFuse no está configurado - funcionando sin observabilidad")
+    
+    # Verificar GROQ API Key
+    if not os.getenv("GROQ_API_KEY"):
+        logger.error("❌ GROQ_API_KEY no configurada")
+        raise ValueError("GROQ_API_KEY es requerida")
+    else:
+        logger.info("✅ GROQ_API_KEY configurada")
+    
+    logger.info("🎉 Sistema Multi-Agentes iniciado correctamente")
 
 # Variable global para el flujo (se inicializa cuando se necesite)
 langgraph_app = None
