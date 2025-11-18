@@ -44,7 +44,7 @@ const Footer = () => {
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="https://linkedin.com/in/josedavidarteaga"
+                href="https://www.linkedin.com/in/davartfernandez"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-2 text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
@@ -53,7 +53,7 @@ const Footer = () => {
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="mailto:jose.arteaga@example.com"
+                href="mailto:josedavidarteagafernandez@gmail.com"
                 className="p-2 text-gray-600 hover:text-green-600 dark:text-gray-400 dark:hover:text-green-400 transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                 title="Send Email"
               >
@@ -71,7 +71,7 @@ const Footer = () => {
         <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-xs text-gray-500 dark:text-gray-500 text-center md:text-left">
-              © 2025 José David Arteaga Fernández. Proyecto de portafolio académico.
+              © 2025 José David Arteaga Fernández. Proyecto de Sistemas Multi-Agentes.
             </p>
             <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-500">
               <span>🤖 Multi-Agent AI System</span>
