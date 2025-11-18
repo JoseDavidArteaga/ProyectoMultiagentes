@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pipeline.flujo import flujo
 import asyncio
@@ -20,6 +21,15 @@ app = FastAPI(
     title="Sistema Multi-Agentes",
     description="API para procesar información usando un flujo de investigación, escritura y verificación",
     version="1.0.0"
+)
+
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # En producción, especifica los dominios permitidos
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Variable global para el flujo (se inicializa cuando se necesite)
