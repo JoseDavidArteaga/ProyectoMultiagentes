@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Brain, AlertTriangle, Wifi, WifiOff } from 'lucide-react';
 import Form from './components/Form';
 import Result from './components/Result';
+import Footer from './components/Footer';
 import { procesarTema, checkApiHealth } from './services/api';
 
 function App() {
@@ -192,17 +193,8 @@ function App() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full py-6 px-4 border-t border-gray-200 dark:border-gray-700">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Desarrollado con ❤️ usando React, FastAPI y LangGraph
-          </p>
-          <p className="text-xs text-gray-500 mt-1">
-            Sistema Multi-Agentes v1.0 - {new Date().getFullYear()}
-          </p>
-        </div>
-      </footer>
+      {/* Footer con información del desarrollador */}
+      <Footer />
     </div>
   );
 }
